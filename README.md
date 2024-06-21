@@ -34,6 +34,15 @@ Go to project root and execute the following command in console to run project:
 flutter run
 ```
 
+**Step 4:**
+
+Credentials login
+
+```
+username: user
+password: pass
+```
+
 ## Boilerplate Features:
 
 - Login
