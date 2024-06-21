@@ -27,7 +27,7 @@ class _EmployeeListPageState extends ConsumerState<EmployeeListPage> {
           IconButton(
             icon: Icon(Icons.download),
             onPressed: () {
-              ref.read(employeeProvider.notifier).downloadEmployeesCsv();
+              ref.read(authProvider).downloadEmployeesCsv(context);
             },
           ),
         ],

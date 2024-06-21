@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ApiService {
@@ -59,7 +61,7 @@ class ApiService {
     }
   }
 
-  Future<void> downloadEmployeesCsv() async {
+  Future<void> downloadEmployeesCsv(BuildContext context) async {
     final credentials = base64Encode(utf8.encode('$username:$password'));
     try {
       final response = await _dio.get(
@@ -72,17 +74,26 @@ class ApiService {
         ),
       );
 
-      // Get the app's document directory
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/employees.csv';
+      // Get the downloads directory
+      final directory = await getExternalStorageDirectory();
+      final downloadsDirectory =
+          Directory('${directory!.parent.parent.parent.parent.path}/Download');
+      final filePath = '${downloadsDirectory.path}/employees.csv';
 
       // Save the file
       final file = File(filePath);
       await file.writeAsBytes(response.data);
 
-      print('File saved at $filePath');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('File saved at $filePath')),
+      );
+
+      // Open the file
+      OpenFile.open(filePath);
     } catch (e) {
-      throw Exception('Failed to download employees CSV: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to download employees CSV: $e')),
+      );
     }
   }
 }

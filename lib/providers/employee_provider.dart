@@ -22,7 +22,7 @@ class EmployeeNotifier extends StateNotifier<List<Employee>> {
     fetchEmployees();
   }
 
-  Future<void> downloadEmployeesCsv() async {
-    await read(authProvider).downloadEmployeesCsv();
-  }
+  // Future<void> downloadEmployeesCsv() async {
+  //   await read(authProvider).downloadEmployeesCsv();
+  // }
 }
